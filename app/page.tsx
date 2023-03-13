@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import { BsFillQuestionDiamondFill } from 'react-icons/bs';
 import { GiCoffeeCup } from 'react-icons/gi';
@@ -7,13 +8,18 @@ import DevToggle from './(components)/DevToggle';
 import FeatureUpdatesLink from './(components)/FeatureUpdatesLink';
 import Footer from './(components)/Footer';
 import SocialLinkButton from './(components)/SocialLinkButton';
+import { signIn, useSession, signOut } from 'next-auth/react';
+import { Session } from 'next-auth';
 
-interface HomePageProps {}
+interface HomePageProps {
+  session: Session;
+}
 
 export default function HomePage(props: HomePageProps) {
   const title = 'Taboo.AI';
   const versionNumber = 'V1.4';
   const environment = process.env.VERCEL_ENV;
+  const { data: session, status } = useSession();
 
   return (
     <main className='h-full w-full overflow-auto'>
@@ -48,6 +54,37 @@ export default function HomePage(props: HomePageProps) {
         >
           Choose Topics
         </Link>
+        {!session && (
+          <Link
+            href='/api/auth/signin'
+            id='login'
+            aria-label='Login Button'
+            className='text-2xl px-8 py-2'
+            data-testid='login-btn'
+            onClick={(e) => {
+              e.preventDefault();
+              signIn();
+            }}
+          >
+            Sign In
+          </Link>
+        )}
+        {session && status === 'authenticated' && (
+          <Link
+            href='/api/auth/signout'
+            id='login'
+            aria-label='Login Button'
+            className='text-2xl px-8 py-2'
+            data-testid='login-btn'
+            onClick={(e) => {
+              e.preventDefault();
+              signOut();
+            }}
+          >
+            Sign Out
+          </Link>
+        )}
+
         {(environment === 'preview' || environment === 'development') && (
           <DevToggle />
         )}

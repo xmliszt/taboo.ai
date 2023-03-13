@@ -1,15 +1,12 @@
 'use client';
 
 import { ChangeEvent, useEffect, useState } from 'react';
-import IVariation from '../(models)/variationModel';
-import {
-  getWordVariations,
-  isWordVariationsExist,
-} from '../../lib/services/aiService';
+import IVariation from '../../types/interfaces/variation.interface';
+import { getWordVariations } from '../../lib/services/aiService';
 import { getLevels } from '../../lib/services/levelService';
 import ILevel from '../levels/(models)/level.interface';
 import { IoMdAddCircle, IoMdRefreshCircle } from 'react-icons/io';
-import { AiFillDelete, AiFillRest } from 'react-icons/ai';
+import { AiFillDelete } from 'react-icons/ai';
 import {
   getFullWordList,
   getTabooWords,

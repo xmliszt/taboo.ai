@@ -1,12 +1,12 @@
 import { uniqueId } from 'lodash';
 import { Author } from '../(models)/Author.enum';
-import { Highlight } from '../(models)/Chat.interface';
+import IHighlight from '../../../types/interfaces/highlight.interface';
 import { applyHighlightsToMessage, sanitizeHighlights } from '../../utilities';
 
 interface ResponseDisplayProps {
   target: string | null;
   message: string;
-  highlights: Highlight[];
+  highlights: IHighlight[];
   author: Author;
   faded: boolean;
   inputConfirmed: boolean;

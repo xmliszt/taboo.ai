@@ -9,6 +9,9 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import LightDarkToggle from './(components)/LightDarkToggle';
 import { getMaintenance } from '../lib/services/maintenanceService';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
+import { getSession } from '../lib/services/sessionService';
 
 const grenze = Grenze({
   weight: '400',
@@ -46,16 +49,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const [maintenanceData, setMaintenanceData] = useState<IMaintenance>();
+  const [session, setSession] = useState<Session>();
   const [isDark, setIsDark] = useState(false);
   const pathName = usePathname();
 
   useEffect(() => {
     fetchMaintenance();
+    fetchSession();
   }, []);
 
   const fetchMaintenance = async () => {
     const data = await getMaintenance();
     setMaintenanceData(data);
+  };
+
+  const fetchSession = async () => {
+    const session = await getSession();
+    session && setSession(session);
   };
 
   return (
@@ -80,7 +90,7 @@ export default function RootLayout({
             patience!
           </section>
         ) : (
-          children
+          <SessionProvider session={session}>{children}</SessionProvider>
         )}
         <AnalyticsWrapper />
       </body>

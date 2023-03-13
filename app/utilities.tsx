@@ -1,15 +1,15 @@
 import _ from 'lodash';
-import IVariation from './(models)/variationModel';
-import { Highlight } from './level/(models)/Chat.interface';
+import IVariation from '../types/interfaces/variation.interface';
+import IHighlight from '../types/interfaces/highlight.interface';
 
 /**
- * Sanitize the array of Highlight objects such that Highlight
+ * Sanitize the array of IHighlight objects such that IHighlight
  * with same start but different end will only keep the one
  * that has the larget end.
- * @param highlights The array of Highlight object
+ * @param highlights The array of IHighlight object
  */
-export const sanitizeHighlights = (highlights: Highlight[]): Highlight[] => {
-  const highlightMap: { [key: number]: Highlight } = {};
+export const sanitizeHighlights = (highlights: IHighlight[]): IHighlight[] => {
+  const highlightMap: { [key: number]: IHighlight } = {};
   for (const highlight of highlights) {
     const start = highlight.start;
     if (start in highlightMap) {
@@ -22,7 +22,7 @@ export const sanitizeHighlights = (highlights: Highlight[]): Highlight[] => {
   }
   const highlightsArray = Object.values(highlightMap);
   highlightsArray.sort((a, b) => a.start - b.start);
-  const results: Highlight[] = [];
+  const results: IHighlight[] = [];
   let prevEnd = 0;
   let idx = 0;
   for (const highlight of highlightsArray) {
@@ -41,7 +41,7 @@ export const sanitizeHighlights = (highlights: Highlight[]): Highlight[] => {
 
 export const applyHighlightsToMessage = (
   message: string,
-  highlights: Highlight[],
+  highlights: IHighlight[],
   onNormalMessagePart: (s: string) => JSX.Element,
   onHighlightMessagePart: (s: string) => JSX.Element
 ): JSX.Element[] => {

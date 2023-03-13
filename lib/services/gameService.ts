@@ -1,4 +1,4 @@
-import IScore from '../../app/level/(models)/Score.interface';
+import IScore from '../../types/interfaces/score.interface';
 import ILevel from '../../app/levels/(models)/level.interface';
 import { insertNewGame } from '../db/gameRepository';
 import { insertHighlight } from '../db/highlightRepository';

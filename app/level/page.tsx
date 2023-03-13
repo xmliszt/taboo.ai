@@ -20,10 +20,10 @@ import {
   getLevelCache,
   getScoresCache,
 } from '../../lib/cache';
-import { Highlight } from './(models)/Chat.interface';
+import IHighlight from '../../types/interfaces/highlight.interface';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import IVariation from '../(models)/variationModel';
+import IVariation from '../../types/interfaces/variation.interface';
 import { getMockResponse, getMockVariations } from '../utilities';
 import { saveGame } from '../../lib/services/gameService';
 import { getTabooWords } from '../../lib/services/wordService';
@@ -42,8 +42,8 @@ export default function LevelPage(props: LevelPageProps) {
   const [isGeneratingVariations, setIsGeneratingVariations] =
     useState<boolean>(false);
   const [pickedWords, setPickedWords] = useState<string[]>([]);
-  const [highlights, setHighlights] = useState<Highlight[]>([]);
-  const [userInputHighlights, setUserInputHighlights] = useState<Highlight[]>(
+  const [highlights, setHighlights] = useState<IHighlight[]>([]);
+  const [userInputHighlights, setUserInputHighlights] = useState<IHighlight[]>(
     []
   );
   const [isValidInput, setIsValidInput] = useState<boolean>(true);
@@ -127,8 +127,8 @@ export default function LevelPage(props: LevelPageProps) {
   const generateHighlights = (
     str: string,
     forResponse: boolean
-  ): Highlight[] => {
-    const highlights: Highlight[] = [];
+  ): IHighlight[] => {
+    const highlights: IHighlight[] = [];
     if (forResponse && target) {
       const regex = getRegexPattern(target);
       let result;
